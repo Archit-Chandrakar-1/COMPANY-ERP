@@ -78,6 +78,8 @@ const Sidebar = () => {
         <NavItem to="/quotations" icon={<FileText size={20} />} label="Quotations" collapsed={collapsed} />
         <NavItem to="/permits" icon={<ClipboardList size={20} />} label="Permits" collapsed={collapsed} />
         <NavItem to="/reports" icon={<BarChart2 size={20} />} label="Reports" collapsed={collapsed} />
+        
+        
         <NavItem to="/access" icon={<Lock size={20} />} label="Access Control" collapsed={collapsed} />
         <NavItem to="/settings" icon={<Settings size={20} />} label="Settings" collapsed={collapsed} />
       </nav>

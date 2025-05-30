@@ -16,6 +16,7 @@ const getPageTitle = (pathname: string): string => {
     '/reports': 'Reports & Analytics',
     '/access': 'Access Control',
     '/settings': 'Admin & System Management',
+    
   };
   
   return routes[pathname] || 'GharKaSathi Admin';

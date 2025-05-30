@@ -6,6 +6,7 @@ import Projects from './pages/Projects';
 import AccessControl from './pages/AccessControl';
 import HomePage from './pages/HomePage';
 import InHouseServices from './pages/InHouseServices';
+import PODashboard from './pages/PODashboard';
 
 // Placeholder components for other pages
 const Clients = () => <div className="p-4">Client Management Page</div>;
@@ -22,6 +23,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/services" element={<InHouseServices />} />
+      <Route path="/PO" element={<PODashboard />} />
       <Route path="/construction/*" element={<AppLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="projects" element={<Projects />} />

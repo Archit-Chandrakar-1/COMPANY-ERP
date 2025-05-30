@@ -121,6 +121,11 @@ const HomePage = () => {
       path: "/customers"
     },
     {
+      icon: <Users size={20} />,
+      label: "Purchase Order",
+      path: "/PO"
+    },
+    {
       icon: <Wrench size={20} />,
       label: "In-House Services",
       path: "/services"
