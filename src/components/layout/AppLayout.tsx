@@ -1,22 +1,20 @@
-import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 
 const getPageTitle = (pathname: string): string => {
   const routes: Record<string, string> = {
-    '/': 'Dashboard',
-    '/projects': 'Project Management',
-    '/clients': 'Client Management',
-    '/contractors': 'Contractors & Workers',
-    '/materials': 'Materials & Inventory',
-    '/equipment': 'Equipment Management',
-    '/quotations': 'Quotations & Billing',
-    '/permits': 'Permits & Compliance',
-    '/reports': 'Reports & Analytics',
-    '/access': 'Access Control',
-    '/settings': 'Admin & System Management',
-    
+    '/construction': 'Dashboard',
+    '/construction/projects': 'My Projects',
+    '/construction/clients': 'Client Management',
+    '/construction/contractors': 'Contractors & Workers',
+    '/construction/materials': 'Materials & Inventory',
+    '/construction/equipment': 'Equipment Management',
+    '/construction/quotations': 'Quotations & Billing',
+    '/construction/permits': 'Permits & Compliance',
+    '/construction/reports': 'Reports & Analytics',
+    '/construction/access': 'Access Control',
+    '/construction/settings': 'Admin & System Management',
   };
   
   return routes[pathname] || 'GharKaSathi Admin';

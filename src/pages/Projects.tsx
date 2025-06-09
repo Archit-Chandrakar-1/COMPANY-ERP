@@ -1,227 +1,267 @@
 import React, { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
-import { Hammer, Plus, Filter, SlidersHorizontal, Search } from 'lucide-react';
-import Button from '../components/ui/Button';
+import { Plus } from 'lucide-react';
+import PmCreateProjectModal from '../components/ui/projectmanagement/createProjectModal';
+import PmFilterableTable from '../components/ui/projectmanagement/pmFilterTable';
+import PmDashboardHeader from '../components/ui/projectmanagement/pmDashboardHeader';
+import PmTabNavigation from '../components/ui/projectmanagement/pmTabNavigation';
+import PmProjectDetailsModal from '../components/ui/projectmanagement/pmProjectDetailModal';
+
 import Badge from '../components/ui/Badge';
-import ProgressBar from '../components/ui/ProgressBar';
+
+type ProjectStage = 
+  | 'Project Created'
+  | 'Recce Pending'
+  | 'Design Pending'
+  | 'Design Freeze'
+  | 'Scope Approval Awaited'
+  | 'Partial Scope Approved'
+  | 'Full Scope Approved'
+  | 'Execution';
 
 type Project = {
-  id: number;
-  name: string;
-  type: 'Residential' | 'Commercial' | 'Industrial';
-  client: string;
-  manager: string;
-  start_date: string;
-  deadline: string;
-  status: 'Planning' | 'Foundation' | 'Framing' | 'Electrical' | 'Plumbing' | 'Completion' | 'On Hold';
-  progress: number;
-  budget: number;
+  sno: number;
+  jobId: string;
+  projectName: string;
+  clientName: string;
+  projectType: string;
+  city: string;
+  clientSuccessManager: string;
+  projectStage: ProjectStage;
 };
 
 const projectData: Project[] = [
   {
-    id: 1,
-    name: 'Green Valley Residences',
-    type: 'Residential',
-    client: 'Rahul Sharma',
-    manager: 'Vikram Mehta',
-    start_date: '2025-01-15',
-    deadline: '2025-12-30',
-    status: 'Framing',
-    progress: 45,
-    budget: 7500000,
+    sno: 1,
+    jobId: 'CONTI2623',
+    projectName: 'Contico - Himayat Nagar',
+    clientName: 'Contico - KPMG',
+    projectType: 'Commercial',
+    city: 'Hyderabad',
+    clientSuccessManager: 'Vikram Mehta',
+    projectStage: 'Full Scope Approved',
   },
   {
-    id: 2,
-    name: 'Metro City Mall',
-    type: 'Commercial',
-    client: 'Metropolis Developers',
-    manager: 'Aarti Singh',
-    start_date: '2024-11-10',
-    deadline: '2026-03-15',
-    status: 'Foundation',
-    progress: 25,
-    budget: 120000000,
+    sno: 2,
+    jobId: 'LIVSP12495',
+    projectName: 'Scalar - Hyderabad',
+    clientName: 'Livspace',
+    projectType: 'Residential',
+    city: 'Hyderabad',
+    clientSuccessManager: 'Aarti Singh',
+    projectStage: 'Execution',
   },
   {
-    id: 3,
-    name: 'Sunset Apartments',
-    type: 'Residential',
-    client: 'Priya Patel',
-    manager: 'Rajan Kapoor',
-    start_date: '2025-03-01',
-    deadline: '2025-09-30',
-    status: 'Planning',
-    progress: 10,
-    budget: 5000000,
+    sno: 3,
+    jobId: 'DORMA124',
+    projectName: 'Dormakaba EC',
+    clientName: 'Dormakaba',
+    projectType: 'Commercial',
+    city: 'Delhi',
+    clientSuccessManager: 'Rajan Kapoor',
+    projectStage: 'Recce Pending',
   },
   {
-    id: 4,
-    name: 'Industrial Park Warehouse',
-    type: 'Industrial',
-    client: 'TechShip Logistics',
-    manager: 'Ajay Nair',
-    start_date: '2025-02-15',
-    deadline: '2025-08-20',
-    status: 'On Hold',
-    progress: 15,
-    budget: 18000000,
+    sno: 4,
+    jobId: 'MEGA12423',
+    projectName: 'MEGAMART - Calicut (Kozhikode)',
+    clientName: 'Arvind Fashion Ltd',
+    projectType: 'Retail',
+    city: 'Kozhikode',
+    clientSuccessManager: 'Neha Sharma',
+    projectStage: 'Scope Approval Awaited',
   },
   {
-    id: 5,
-    name: 'Golden Towers',
-    type: 'Residential',
-    client: 'Anika Shah',
-    manager: 'Vikram Mehta',
-    start_date: '2024-09-10',
-    deadline: '2025-11-28',
-    status: 'Electrical',
-    progress: 65,
-    budget: 9000000,
+    sno: 5,
+    jobId: 'RDASH124',
+    projectName: 'WORKSQUARE',
+    clientName: 'Tech Solutions',
+    projectType: 'Office',
+    city: 'Mumbai',
+    clientSuccessManager: 'Ajay Nair',
+    projectStage: 'Execution',
   },
   {
-    id: 6,
-    name: 'Riverside Shopping Complex',
-    type: 'Commercial',
-    client: 'River Ventures Ltd',
-    manager: 'Deepak Sharma',
-    start_date: '2024-12-05',
-    deadline: '2026-01-10',
-    status: 'Framing',
-    progress: 40,
-    budget: 85000000,
+    sno: 6,
+    jobId: 'TRDPL12394',
+    projectName: 'Transdien - TWINDUSTRIAL Inc',
+    clientName: 'Transdien Private Limited',
+    projectType: 'Industrial',
+    city: 'Chennai',
+    clientSuccessManager: 'Deepak Sharma',
+    projectStage: 'Execution',
+  },
+  {
+    sno: 7,
+    jobId: 'PROJ12393',
+    projectName: 'Demo_RDash 7654',
+    clientName: 'Rdash test',
+    projectType: 'Demo',
+    city: 'Gurgaon',
+    clientSuccessManager: 'Priya Patel',
+    projectStage: 'Partial Scope Approved',
+  },
+  {
+    sno: 8,
+    jobId: 'RDASH12379',
+    projectName: 'ABC',
+    clientName: 'Test Client',
+    projectType: 'Residential',
+    city: 'Noida',
+    clientSuccessManager: 'Suresh Kumar',
+    projectStage: 'Project Created',
   },
 ];
 
-const statusColors: Record<string, 'default' | 'success' | 'warning' | 'error'> = {
-  'Planning': 'default',
-  'Foundation': 'default',
-  'Framing': 'default',
-  'Electrical': 'success',
-  'Plumbing': 'success',
-  'Completion': 'success',
-  'On Hold': 'error',
-};
-
-const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    maximumFractionDigits: 0,
-  }).format(amount);
+const stageColors: Record<ProjectStage, 'default' | 'success' | 'warning' | 'error'> = {
+  'Project Created': 'default',
+  'Recce Pending': 'warning',
+  'Design Pending': 'warning',
+  'Design Freeze': 'default',
+  'Scope Approval Awaited': 'warning',
+  'Partial Scope Approved': 'warning',
+  'Full Scope Approved': 'success',
+  'Execution': 'success',
 };
 
 const Projects = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filter, setFilter] = useState<'all' | 'Residential' | 'Commercial' | 'Industrial'>('all');
-  
-  const filteredProjects = projectData.filter((project) => {
-    const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.client.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = filter === 'all' || project.type === filter;
-    
-    return matchesSearch && matchesFilter;
-  });
-  
+  const [activeTab, setActiveTab] = useState('all-projects');
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  const tabs = [
+    { id: 'all-projects', label: 'All Projects', count: 2102, isActive: true },
+    { id: 'project-created', label: 'Project Created', count: 104 },
+    { id: 'recce-pending', label: 'Recce Pending', count: 43 },
+    { id: 'design-pending', label: 'Design Pending', count: 71 },
+    { id: 'design-freeze', label: 'Design Freeze', count: 5 },
+    { id: 'scope-approval-awaited', label: 'Scope Approval Awaited', count: 29 },
+    { id: 'partial-scope-approved', label: 'Partial Scope Approved', count: 9 },
+    { id: 'full-scope-approved', label: 'Full Scope Approved', count: 15 },
+  ];
+
+  const uniqueClients = [...new Set(projectData.map(p => p.clientName))];
+  const uniqueProjectTypes = [...new Set(projectData.map(p => p.projectType))];
+  const uniqueManagers = [...new Set(projectData.map(p => p.clientSuccessManager))];
+  const uniqueStages = [...new Set(projectData.map(p => p.projectStage))];
+
+  const columns = [
+    {
+      key: 'sno',
+      label: 'S.no',
+    },
+    {
+      key: 'jobId',
+      label: 'Job ID',
+      filter: {
+        type: 'search' as const,
+        placeholder: 'Search Job ID...',
+      },
+    },
+    {
+      key: 'projectName',
+      label: 'Project Name',
+      filter: {
+        type: 'search' as const,
+        placeholder: 'Search Project...',
+      },
+    },
+    {
+      key: 'clientName',
+      label: 'Client Name',
+      filter: {
+        type: 'dropdown' as const,
+        options: uniqueClients.map(client => ({ value: client, label: client })),
+      },
+    },
+    {
+      key: 'projectType',
+      label: 'Project Type',
+      filter: {
+        type: 'dropdown' as const,
+        options: uniqueProjectTypes.map(type => ({ value: type, label: type })),
+      },
+    },
+    {
+      key: 'city',
+      label: 'City',
+      filter: {
+        type: 'search' as const,
+        placeholder: 'Search City...',
+      },
+    },
+    {
+      key: 'clientSuccessManager',
+      label: 'Client Success Manager',
+      filter: {
+        type: 'dropdown' as const,
+        options: uniqueManagers.map(manager => ({ value: manager, label: manager })),
+      },
+    },
+    {
+      key: 'projectStage',
+      label: 'Project Stage',
+      filter: {
+        type: 'dropdown' as const,
+        options: uniqueStages.map(stage => ({ value: stage, label: stage })),
+      },
+      render: (value: ProjectStage) => (
+        <Badge variant={stageColors[value]} className="whitespace-nowrap">
+          {value}
+        </Badge>
+      ),
+    },
+  ];
+
+  const handleAddProject = () => {
+    setIsCreateModalOpen(true);
+  };
+
+  const handleCreateProject = (projectData: any) => {
+    console.log('Creating project:', projectData);
+    // Here you would typically send the data to your backend
+  };
+
+  const handleViewProject = (project: Project) => {
+    setSelectedProject(project);
+    setIsDetailsModalOpen(true);
+  };
+
   return (
-    <div className="space-y-6 fade-in">
-      <div className="flex flex-col sm:flex-row justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Hammer className="text-primary" size={24} />
-            Project Management
-          </h1>
-        </div>
-        <Button variant="primary" icon={<Plus size={16} />}>
-          Add New Project
-        </Button>
-      </div>
+    <div className="space-y-0 fade-in">
+      <PmDashboardHeader
+        title="My Projects"
+        userName="Yash"
+        notificationCount={5}
+        onAddClick={handleAddProject}
+        addButtonText="Add Project"
+        addButtonIcon={<Plus size={16} />}
+      />
       
-      <Card>
-        <CardHeader className="pb-0">
-          <div className="flex flex-col md:flex-row justify-between gap-4">
-            <div className="relative w-full md:w-64">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary" size={16} />
-              <input
-                type="text"
-                placeholder="Search projects or clients..."
-                className="input pl-10 py-2 w-full"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2">
-                <Filter size={16} className="text-secondary" />
-                <select
-                  className="input py-2 pr-8"
-                  value={filter}
-                  onChange={(e) => setFilter(e.target.value as any)}
-                >
-                  <option value="all">All Types</option>
-                  <option value="Residential">Residential</option>
-                  <option value="Commercial">Commercial</option>
-                  <option value="Industrial">Industrial</option>
-                </select>
-              </div>
-              
-              <Button variant="outline" icon={<SlidersHorizontal size={16} />}>
-                More Filters
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full mt-4">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left py-3 font-medium">Project Name</th>
-                  <th className="text-left py-3 font-medium">Type</th>
-                  <th className="text-left py-3 font-medium">Client</th>
-                  <th className="text-left py-3 font-medium">Status</th>
-                  <th className="text-left py-3 font-medium">Progress</th>
-                  <th className="text-left py-3 font-medium">Budget</th>
-                  <th className="text-right py-3 font-medium">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredProjects.map((project) => (
-                  <tr key={project.id} className="border-b border-border hover:bg-secondary/5">
-                    <td className="py-3">
-                      <div className="font-medium">{project.name}</div>
-                      <div className="text-xs text-secondary mt-1">
-                        Due: {new Date(project.deadline).toLocaleDateString('en-IN')}
-                      </div>
-                    </td>
-                    <td className="py-3">{project.type}</td>
-                    <td className="py-3">{project.client}</td>
-                    <td className="py-3">
-                      <Badge variant={statusColors[project.status]}>
-                        {project.status}
-                      </Badge>
-                    </td>
-                    <td className="py-3 pr-3">
-                      <ProgressBar 
-                        value={project.progress} 
-                        variant={project.status === 'On Hold' ? 'error' : project.progress > 60 ? 'success' : 'default'}
-                        showValue 
-                      />
-                    </td>
-                    <td className="py-3">{formatCurrency(project.budget)}</td>
-                    <td className="py-3 text-right">
-                      <Button variant="outline" size="sm">
-                        View
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+      <PmTabNavigation
+        tabs={tabs}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        className="mb-6"
+      />
+      
+      <PmFilterableTable
+        columns={columns}
+        data={projectData}
+        onViewProject={handleViewProject}
+      />
+
+      <PmCreateProjectModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onSubmit={handleCreateProject}
+      />
+
+      <PmProjectDetailsModal
+        isOpen={isDetailsModalOpen}
+        onClose={() => setIsDetailsModalOpen(false)}
+        project={selectedProject}
+      />
     </div>
   );
 };

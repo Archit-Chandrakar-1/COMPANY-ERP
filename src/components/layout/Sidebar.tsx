@@ -55,7 +55,7 @@ const Sidebar = () => {
       <div className="p-4 border-b border-border flex items-center justify-between">
         {!collapsed && (
           <div className="flex items-center gap-2">
-            <Construction className="text-primary" size={24} />
+            <Construction className="text-primary\" size={24} />
             <h2 className="font-bold text-lg">GharKaSathi</h2>
           </div>
         )}
@@ -69,19 +69,17 @@ const Sidebar = () => {
       </div>
       
       <nav className="flex-1 py-4 px-2 space-y-1 overflow-y-auto">
-        <NavItem to="/" icon={<LayoutDashboard size={20} />} label="Dashboard" collapsed={collapsed} />
-        <NavItem to="/projects" icon={<Hammer size={20} />} label="Projects" collapsed={collapsed} />
-        <NavItem to="/clients" icon={<Users size={20} />} label="Clients" collapsed={collapsed} />
-        <NavItem to="/contractors" icon={<HardHat size={20} />} label="Contractors" collapsed={collapsed} />
-        <NavItem to="/materials" icon={<Package size={20} />} label="Materials" collapsed={collapsed} />
-        <NavItem to="/equipment" icon={<Truck size={20} />} label="Equipment" collapsed={collapsed} />
-        <NavItem to="/quotations" icon={<FileText size={20} />} label="Quotations" collapsed={collapsed} />
-        <NavItem to="/permits" icon={<ClipboardList size={20} />} label="Permits" collapsed={collapsed} />
-        <NavItem to="/reports" icon={<BarChart2 size={20} />} label="Reports" collapsed={collapsed} />
-        
-        
-        <NavItem to="/access" icon={<Lock size={20} />} label="Access Control" collapsed={collapsed} />
-        <NavItem to="/settings" icon={<Settings size={20} />} label="Settings" collapsed={collapsed} />
+        <NavItem to="/construction" icon={<LayoutDashboard size={20} />} label="Dashboard" collapsed={collapsed} />
+        <NavItem to="/construction/projects" icon={<Hammer size={20} />} label="Projects" collapsed={collapsed} />
+        <NavItem to="/construction/clients" icon={<Users size={20} />} label="Clients" collapsed={collapsed} />
+        <NavItem to="/construction/contractors" icon={<HardHat size={20} />} label="Contractors" collapsed={collapsed} />
+        <NavItem to="/construction/materials" icon={<Package size={20} />} label="Materials" collapsed={collapsed} />
+        <NavItem to="/construction/equipment" icon={<Truck size={20} />} label="Equipment" collapsed={collapsed} />
+        <NavItem to="/construction/quotations" icon={<FileText size={20} />} label="Quotations" collapsed={collapsed} />
+        <NavItem to="/construction/permits" icon={<ClipboardList size={20} />} label="Permits" collapsed={collapsed} />
+        <NavItem to="/construction/reports" icon={<BarChart2 size={20} />} label="Reports" collapsed={collapsed} />
+        <NavItem to="/construction/access" icon={<Lock size={20} />} label="Access Control" collapsed={collapsed} />
+        <NavItem to="/construction/settings" icon={<Settings size={20} />} label="Settings" collapsed={collapsed} />
       </nav>
       
       <div className="p-4 border-t border-border">
